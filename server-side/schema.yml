@@ -1,0 +1,1700 @@
+openapi: 3.0.3
+info:
+  title: Autism API
+  version: 1.0.0
+  description: A system to help families getting support they need
+paths:
+  /api/token/:
+    post:
+      operationId: api_token_create
+      description: |-
+        Takes a set of user credentials and returns an access and refresh JSON web
+        token pair to prove the authentication of those credentials.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenObtainPair'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenObtainPair'
+          description: ''
+  /api/token/refresh/:
+    post:
+      operationId: api_token_refresh_create
+      description: |-
+        Takes a refresh type JSON web token and returns an access type JSON web
+        token if the refresh token is valid.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenRefresh'
+        required: true
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenRefresh'
+          description: ''
+  /appointments/:
+    get:
+      operationId: appointments_retrieve
+      tags:
+      - appointments
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: appointments_create
+      tags:
+      - appointments
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          description: No response body
+  /appointments/{id}/:
+    get:
+      operationId: appointments_retrieve_2
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this appointment.
+        required: true
+      tags:
+      - appointments
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    put:
+      operationId: appointments_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this appointment.
+        required: true
+      tags:
+      - appointments
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    patch:
+      operationId: appointments_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this appointment.
+        required: true
+      tags:
+      - appointments
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    delete:
+      operationId: appointments_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this appointment.
+        required: true
+      tags:
+      - appointments
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /child/:
+    get:
+      operationId: child_list
+      tags:
+      - child
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Child'
+          description: ''
+    post:
+      operationId: child_create
+      tags:
+      - child
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Child'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Child'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Child'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Child'
+          description: ''
+  /child/{id}/:
+    get:
+      operationId: child_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this child.
+        required: true
+      tags:
+      - child
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Child'
+          description: ''
+    put:
+      operationId: child_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this child.
+        required: true
+      tags:
+      - child
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Child'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Child'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Child'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Child'
+          description: ''
+    patch:
+      operationId: child_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this child.
+        required: true
+      tags:
+      - child
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedChild'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedChild'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedChild'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Child'
+          description: ''
+    delete:
+      operationId: child_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this child.
+        required: true
+      tags:
+      - child
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /detect:
+    post:
+      operationId: detect_create
+      tags:
+      - detect
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /detect-emotion:
+    post:
+      operationId: detect_emotion_create
+      tags:
+      - detect-emotion
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          description: No response body
+  /game/:
+    get:
+      operationId: game_list
+      tags:
+      - game
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Game'
+          description: ''
+    post:
+      operationId: game_create
+      tags:
+      - game
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Game'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Game'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Game'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+          description: ''
+  /game-log/:
+    get:
+      operationId: game_log_list
+      tags:
+      - game-log
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/GameLog'
+          description: ''
+    post:
+      operationId: game_log_create
+      tags:
+      - game-log
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameLog'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GameLog'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GameLog'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameLog'
+          description: ''
+  /game-log/{id}/:
+    get:
+      operationId: game_log_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this game log.
+        required: true
+      tags:
+      - game-log
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameLog'
+          description: ''
+    put:
+      operationId: game_log_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this game log.
+        required: true
+      tags:
+      - game-log
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/GameLog'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/GameLog'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/GameLog'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameLog'
+          description: ''
+    patch:
+      operationId: game_log_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this game log.
+        required: true
+      tags:
+      - game-log
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedGameLog'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedGameLog'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedGameLog'
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameLog'
+          description: ''
+    delete:
+      operationId: game_log_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this game log.
+        required: true
+      tags:
+      - game-log
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /game-log/get_log/:
+    get:
+      operationId: game_log_get_log_retrieve
+      tags:
+      - game-log
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameLog'
+          description: ''
+  /game-log/get_log/{user_id}/{game_id}/:
+    get:
+      operationId: game_log_get_log_retrieve_2
+      parameters:
+      - in: path
+        name: game_id
+        schema:
+          type: integer
+        required: true
+      - in: path
+        name: user_id
+        schema:
+          type: integer
+        required: true
+      tags:
+      - game-log
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GameLog'
+          description: ''
+  /game/{id}/:
+    get:
+      operationId: game_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this game.
+        required: true
+      tags:
+      - game
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+          description: ''
+    put:
+      operationId: game_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this game.
+        required: true
+      tags:
+      - game
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Game'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Game'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Game'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+          description: ''
+    patch:
+      operationId: game_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this game.
+        required: true
+      tags:
+      - game
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedGame'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedGame'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedGame'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Game'
+          description: ''
+    delete:
+      operationId: game_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this game.
+        required: true
+      tags:
+      - game
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /parent/:
+    get:
+      operationId: parent_list
+      tags:
+      - parent
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Parent'
+          description: ''
+    post:
+      operationId: parent_create
+      tags:
+      - parent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Parent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Parent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Parent'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parent'
+          description: ''
+  /parent/{id}/:
+    get:
+      operationId: parent_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this parent.
+        required: true
+      tags:
+      - parent
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parent'
+          description: ''
+    put:
+      operationId: parent_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this parent.
+        required: true
+      tags:
+      - parent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Parent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Parent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Parent'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parent'
+          description: ''
+    patch:
+      operationId: parent_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this parent.
+        required: true
+      tags:
+      - parent
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedParent'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedParent'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedParent'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Parent'
+          description: ''
+    delete:
+      operationId: parent_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this parent.
+        required: true
+      tags:
+      - parent
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /specialist/:
+    get:
+      operationId: specialist_list
+      tags:
+      - specialist
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Specialist'
+          description: ''
+    post:
+      operationId: specialist_create
+      tags:
+      - specialist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Specialist'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Specialist'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Specialist'
+        required: true
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Specialist'
+          description: ''
+  /specialist/{id}/:
+    get:
+      operationId: specialist_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this specialist.
+        required: true
+      tags:
+      - specialist
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Specialist'
+          description: ''
+    put:
+      operationId: specialist_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this specialist.
+        required: true
+      tags:
+      - specialist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Specialist'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Specialist'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Specialist'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Specialist'
+          description: ''
+    patch:
+      operationId: specialist_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this specialist.
+        required: true
+      tags:
+      - specialist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedSpecialist'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedSpecialist'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedSpecialist'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Specialist'
+          description: ''
+    delete:
+      operationId: specialist_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this specialist.
+        required: true
+      tags:
+      - specialist
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /specialist/{specialist_pk}/appointments/:
+    get:
+      operationId: specialist_appointments_retrieve
+      parameters:
+      - in: path
+        name: specialist_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - specialist
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    post:
+      operationId: specialist_appointments_create
+      parameters:
+      - in: path
+        name: specialist_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - specialist
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          description: No response body
+  /specialist/{specialist_pk}/appointments/{id}/:
+    get:
+      operationId: specialist_appointments_retrieve_2
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this appointment.
+        required: true
+      - in: path
+        name: specialist_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - specialist
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    put:
+      operationId: specialist_appointments_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this appointment.
+        required: true
+      - in: path
+        name: specialist_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - specialist
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    patch:
+      operationId: specialist_appointments_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this appointment.
+        required: true
+      - in: path
+        name: specialist_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - specialist
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          description: No response body
+    delete:
+      operationId: specialist_appointments_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this appointment.
+        required: true
+      - in: path
+        name: specialist_pk
+        schema:
+          type: integer
+        required: true
+      tags:
+      - specialist
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /specialist/{specialist_pk}/reviews/:
+    get:
+      operationId: specialist_reviews_list
+      parameters:
+      - in: path
+        name: specialist_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - specialist
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Review'
+          description: ''
+    post:
+      operationId: specialist_reviews_create
+      parameters:
+      - in: path
+        name: specialist_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - specialist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Review'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Review'
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+          description: ''
+  /specialist/{specialist_pk}/reviews/{id}/:
+    get:
+      operationId: specialist_reviews_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: specialist_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - specialist
+      security:
+      - jwtAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+          description: ''
+    put:
+      operationId: specialist_reviews_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: specialist_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - specialist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Review'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Review'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Review'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+          description: ''
+    patch:
+      operationId: specialist_reviews_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: specialist_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - specialist
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedReview'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedReview'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedReview'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Review'
+          description: ''
+    delete:
+      operationId: specialist_reviews_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: string
+        required: true
+      - in: path
+        name: specialist_pk
+        schema:
+          type: string
+        required: true
+      tags:
+      - specialist
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+  /token-economy/:
+    get:
+      operationId: token_economy_list
+      tags:
+      - token-economy
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/TokenEconomy'
+          description: ''
+    post:
+      operationId: token_economy_create
+      tags:
+      - token-economy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenEconomy'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenEconomy'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenEconomy'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenEconomy'
+          description: ''
+  /token-economy/{id}/:
+    get:
+      operationId: token_economy_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this token economy.
+        required: true
+      tags:
+      - token-economy
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenEconomy'
+          description: ''
+    put:
+      operationId: token_economy_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this token economy.
+        required: true
+      tags:
+      - token-economy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenEconomy'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenEconomy'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenEconomy'
+        required: true
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenEconomy'
+          description: ''
+    patch:
+      operationId: token_economy_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this token economy.
+        required: true
+      tags:
+      - token-economy
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedTokenEconomy'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedTokenEconomy'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedTokenEconomy'
+      security:
+      - jwtAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenEconomy'
+          description: ''
+    delete:
+      operationId: token_economy_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this token economy.
+        required: true
+      tags:
+      - token-economy
+      security:
+      - jwtAuth: []
+      responses:
+        '204':
+          description: No response body
+components:
+  schemas:
+    Child:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          $ref: '#/components/schemas/User'
+        user_economy:
+          type: array
+          items:
+            type: string
+            format: uri
+          readOnly: true
+      required:
+      - id
+      - user
+      - user_economy
+    Game:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+      required:
+      - description
+      - id
+      - name
+    GameLog:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        level:
+          type: integer
+          maximum: 4
+          minimum: 1
+        player:
+          type: integer
+          readOnly: true
+        game:
+          type: integer
+      required:
+      - game
+      - id
+      - player
+    Parent:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          $ref: '#/components/schemas/User'
+        children:
+          type: array
+          items:
+            type: string
+            format: uri
+          readOnly: true
+      required:
+      - children
+      - id
+      - user
+    PatchedChild:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          $ref: '#/components/schemas/User'
+        user_economy:
+          type: array
+          items:
+            type: string
+            format: uri
+          readOnly: true
+    PatchedGame:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        name:
+          type: string
+          maxLength: 50
+        description:
+          type: string
+    PatchedGameLog:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        level:
+          type: integer
+          maximum: 4
+          minimum: 1
+        player:
+          type: integer
+          readOnly: true
+        game:
+          type: integer
+    PatchedParent:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          $ref: '#/components/schemas/User'
+        children:
+          type: array
+          items:
+            type: string
+            format: uri
+          readOnly: true
+    PatchedReview:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        rating:
+          allOf:
+          - $ref: '#/components/schemas/RatingEnum'
+          minimum: -2147483648
+          maximum: 2147483647
+        comment:
+          type: string
+          nullable: true
+        user:
+          type: integer
+          nullable: true
+        reviewed_user:
+          type: integer
+          nullable: true
+    PatchedSpecialist:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          $ref: '#/components/schemas/User'
+        specialization:
+          type: string
+          maxLength: 255
+        cv:
+          type: string
+          format: uri
+          nullable: true
+          pattern: (?:pdf)$
+    PatchedTokenEconomy:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        token:
+          type: string
+          readOnly: true
+    RatingEnum:
+      enum:
+      - 1
+      - 2
+      - 3
+      - 4
+      - 5
+      type: integer
+      description: |-
+        * `1` - 1 star
+        * `2` - 2 stars
+        * `3` - 3 stars
+        * `4` - 4 stars
+        * `5` - 5 stars
+    Review:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        rating:
+          allOf:
+          - $ref: '#/components/schemas/RatingEnum'
+          minimum: -2147483648
+          maximum: 2147483647
+        comment:
+          type: string
+          nullable: true
+        user:
+          type: integer
+          nullable: true
+        reviewed_user:
+          type: integer
+          nullable: true
+      required:
+      - id
+    RoleEnum:
+      enum:
+      - ADMIN
+      - CHILD
+      - PARENT
+      - SPECIALIST
+      type: string
+      description: |-
+        * `ADMIN` - Admin
+        * `CHILD` - Child
+        * `PARENT` - Parent
+        * `SPECIALIST` - Specialist
+    Specialist:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        user:
+          $ref: '#/components/schemas/User'
+        specialization:
+          type: string
+          maxLength: 255
+        cv:
+          type: string
+          format: uri
+          nullable: true
+          pattern: (?:pdf)$
+      required:
+      - id
+      - specialization
+      - user
+    TokenEconomy:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        quantity:
+          type: integer
+          maximum: 2147483647
+          minimum: 0
+        token:
+          type: string
+          readOnly: true
+      required:
+      - id
+      - quantity
+      - token
+    TokenObtainPair:
+      type: object
+      properties:
+        email:
+          type: string
+          writeOnly: true
+        password:
+          type: string
+          writeOnly: true
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+          readOnly: true
+      required:
+      - access
+      - email
+      - password
+      - refresh
+    TokenRefresh:
+      type: object
+      properties:
+        access:
+          type: string
+          readOnly: true
+        refresh:
+          type: string
+      required:
+      - access
+      - refresh
+    User:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        username:
+          type: string
+          maxLength: 50
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          writeOnly: true
+        first_name:
+          type: string
+          maxLength: 50
+        last_name:
+          type: string
+          maxLength: 50
+        phone_number:
+          type: string
+          maxLength: 17
+        birthdate:
+          type: string
+          format: date
+        profile_image:
+          type: string
+          format: uri
+        role:
+          allOf:
+          - $ref: '#/components/schemas/RoleEnum'
+          readOnly: true
+          default: CHILD
+        longituide:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          readOnly: true
+        latitude:
+          type: string
+          format: decimal
+          pattern: ^-?\d{0,3}(?:\.\d{0,6})?$
+          readOnly: true
+      required:
+      - email
+      - first_name
+      - id
+      - last_name
+      - latitude
+      - longituide
+      - password
+      - role
+      - username
+  securitySchemes:
+    jwtAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "B"
